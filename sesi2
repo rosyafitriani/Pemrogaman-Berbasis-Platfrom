@@ -1,0 +1,21 @@
+function hitungHargaAkhir(totalBelanja) {
+  let hargaAkhir;
+
+  if (totalBelanja > 1000000) {
+    // diskon 15%
+    hargaAkhir = totalBelanja - (totalBelanja * 0.15);
+  } else if (totalBelanja > 500000) {
+    // diskon 10%
+    hargaAkhir = totalBelanja - (totalBelanja * 0.10);
+  } else {
+    // tidak ada diskon
+    hargaAkhir = totalBelanja;
+  }
+
+  return hargaAkhir;
+}
+
+// Contoh pemanggilan fungsi
+console.log("Tanpa diskon: ",hitungHargaAkhir(400000));   // 400000 (tidak ada diskon)
+console.log("Diskon 10%: ",hitungHargaAkhir(700000));   // 630000 (diskon 10%)
+console.log("Diskon 15%: ",hitungHargaAkhir(1500000));  // 1275000 (diskon 15%)
