@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabel Nilai Siswa</title>
+  <style>
+    body {
+      background-color: #ffe6f0; /* warna pink lembut */
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .box {
+      width: 90%;
+      max-width: 700px;
+      background: #fff;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      text-align: center;
+      color: #d63384;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 6px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      margin-top: 15px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f78fb3;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #f368e0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ccc;
+      text-align: center;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f8a5c2;
+      color: white;
+    }
+
+    tr:hover {
+      background-color: #fff0f5;
+    }
+
+    .hapus-btn {
+      background-color: #ff6b81;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .hapus-btn:hover {
+      background-color: #ee5253;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>Input Nilai Siswa</h2>
+
+    <!-- Form input data -->
+    <form onsubmit="event.preventDefault(); tambahData();">
+      <label>Nama:</label>
+      <input type="text" id="nama" required>
+
+      <label>Nilai Tugas:</label>
+      <input type="number" id="tugas" required>
+
+      <label>Nilai UTS:</label>
+      <input type="number" id="uts" required>
+
+      <label>Nilai UAS:</label>
+      <input type="number" id="uas" required>
+
+      <button type="submit">Tambah Data</button>
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>Tugas</th>
+          <th>UTS</th>
+          <th>UAS</th>
+          <th>NA</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="isiTabel">
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    let dataSiswa = [];
+
+    function tambahData() {
+      let nama = document.getElementById("nama").value;
+      let tugas = parseFloat(document.getElementById("tugas").value);
+      let uts = parseFloat(document.getElementById("uts").value);
+      let uas = parseFloat(document.getElementById("uas").value);
+
+      let na = (0.4 * tugas) + (0.3 * uts) + (0.3 * uas);
+
+      dataSiswa.push({ nama, tugas, uts, uas, na });
+
+      tampilkanData();
+
+      document.getElementById("nama").value = "";
+      document.getElementById("tugas").value = "";
+      document.getElementById("uts").value = "";
+      document.getElementById("uas").value = "";
+    }
+
+    function hapusData(index) {
+      dataSiswa.splice(index, 1);
+      tampilkanData();
+    }
+
+    function tampilkanData() {
+      let isiTabel = document.getElementById("isiTabel");
+      isiTabel.innerHTML = "";
+
+      dataSiswa.forEach((siswa, i) => {
+        isiTabel.innerHTML += `
+          <tr>
+            <td>${i + 1}</td>
+            <td>${siswa.nama}</td>
+            <td>${siswa.tugas}</td>
+            <td>${siswa.uts}</td>
+            <td>${siswa.uas}</td>
+            <td>${siswa.na.toFixed(1)}</td>
+            <td><button class="hapus-btn" onclick="hapusData(${i})">Hapus</button></td>
+          </tr>
+        `;
+      });
+    }
+  </script>
+
+</body>
+</html>
